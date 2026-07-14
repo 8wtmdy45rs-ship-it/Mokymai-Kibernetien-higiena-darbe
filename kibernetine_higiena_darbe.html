@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kibernetinė higiena darbe | UAB Samsonas</title>
+<style>
+  :root {
+    --navy: #16223D;
+    --navy-light: #1F2E52;
+    --steel: #3D5A80;
+    --red: #E63946;
+    --ice: #CADCFC;
+    --bg: #F6F8FB;
+    --grey: #5B6B84;
+    --dark: #1B2530;
+    --green: #1E7A50;
+    --green-bg: #EAF6F0;
+    --red-bg: #FDEDEE;
+    --white: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; padding: 0;
+    font-family: Arial, "Segoe UI", Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    line-height: 1.6;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; background: var(--white); box-shadow: 0 0 40px rgba(22,34,61,0.08); }
+
+  .hero { background: var(--navy); color: var(--white); padding: 46px 40px 40px; }
+  .hero .brand { font-size: 12.5px; letter-spacing: 2px; font-weight: 700; color: var(--ice); text-transform: uppercase; }
+  .hero h1 { font-size: 32px; margin: 10px 0 8px; }
+  .hero p.lead { color: #B9C7E8; font-size: 15px; max-width: 560px; margin: 0 0 22px; }
+  .hero .meta-row { display: flex; gap: 22px; flex-wrap: wrap; font-size: 13px; color: #8CA3D6; }
+  .hero .meta-row b { color: var(--white); }
+
+  nav.toc {
+    position: sticky; top: 0; z-index: 50; background: var(--white);
+    border-bottom: 1px solid #EEF1F5; padding: 12px 40px;
+    display: flex; gap: 4px; flex-wrap: wrap; font-size: 12.5px;
+  }
+  nav.toc a { color: var(--grey); text-decoration: none; padding: 6px 10px; border-radius: 6px; font-weight: 700; white-space: nowrap; }
+  nav.toc a:hover { background: var(--bg); color: var(--navy); }
+  nav.toc a.test-link { color: var(--red); }
+
+  section { padding: 42px 40px; border-bottom: 1px solid #EEF1F5; }
+  section:last-of-type { border-bottom: none; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; color: var(--red); text-transform: uppercase; margin-bottom: 8px; }
+  h2 { font-size: 25px; color: var(--navy); margin: 0 0 16px; }
+  h3 { font-size: 17px; color: var(--navy); margin: 22px 0 8px; }
+  p { margin: 0 0 14px; font-size: 15px; color: var(--dark); }
+  ul, ol { margin: 0 0 14px; padding-left: 22px; font-size: 15px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--navy); }
+
+  .callout { background: var(--bg); border-radius: 10px; padding: 18px 20px; margin: 18px 0; }
+  .callout.warn { background: var(--red-bg); }
+  .callout.warn .callout-title { color: var(--red); }
+  .callout-title { font-weight: 700; color: var(--navy); font-size: 14px; margin-bottom: 6px; }
+
+  .example-box { border: 1.5px solid #D8DEE9; border-radius: 10px; padding: 16px 18px; margin: 14px 0; font-size: 14px; }
+  .example-box b { display: block; color: var(--steel); font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+
+  table.crack-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  table.crack-table td { padding: 9px 12px; background: var(--bg); }
+  table.crack-table tr td:last-child { text-align: right; font-weight: 700; color: var(--red); }
+  table.crack-table tr + tr td { border-top: 4px solid var(--white); }
+
+  .icon-row { display: flex; gap: 16px; flex-wrap: wrap; margin: 18px 0; }
+  .icon-card { flex: 1 1 200px; background: var(--bg); border-radius: 10px; padding: 16px; font-size: 13.5px; }
+  .icon-card .ic { width: 30px; height: 30px; color: var(--steel); margin-bottom: 8px; }
+  .icon-card b { display: block; color: var(--navy); font-size: 14px; margin-bottom: 4px; }
+
+  details.kcheck { background: var(--navy-light); border-radius: 10px; margin: 22px 0; overflow: hidden; }
+  details.kcheck summary { cursor: pointer; padding: 16px 20px; font-weight: 700; color: var(--white); font-size: 14.5px; list-style: none; display: flex; align-items: center; gap: 10px; }
+  details.kcheck summary::-webkit-details-marker { display: none; }
+  details.kcheck summary::before { content: "❓"; }
+  details.kcheck[open] summary::before { content: "💡"; }
+  details.kcheck .kcheck-body { padding: 0 20px 18px; color: var(--ice); font-size: 14px; }
+  details.kcheck .kcheck-body b { color: var(--white); }
+
+  #testas { background: var(--bg); padding: 0; }
+  .test-inner { padding: 44px 40px; }
+  .test-intro-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--white); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+  .test-intro-icon svg { width: 30px; height: 30px; color: var(--navy); }
+  h2.test-title { text-align: center; }
+  p.test-sub { text-align: center; color: var(--grey); font-size: 14.5px; margin-bottom: 26px; }
+  .rules { background: var(--white); border-radius: 10px; padding: 20px 24px; margin-bottom: 26px; }
+  .rules li { font-size: 14px; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .field input { width: 100%; padding: 11px 14px; font-size: 14.5px; border: 1.5px solid #D8DEE9; border-radius: 8px; font-family: inherit; color: var(--dark); background: var(--white); }
+  .field input:focus { outline: 2px solid var(--steel); border-color: var(--steel); }
+
+  button.primary { display: block; width: 100%; background: var(--red); color: var(--white); font-size: 16px; font-weight: 700; border: none; border-radius: 10px; padding: 16px; cursor: pointer; font-family: inherit; margin-top: 8px; }
+  button.primary:hover { filter: brightness(1.08); }
+  button.secondary { display: block; width: 100%; background: var(--white); color: var(--navy); font-size: 15px; font-weight: 700; border: 1.5px solid var(--navy); border-radius: 10px; padding: 14px; cursor: pointer; font-family: inherit; margin-top: 12px; }
+  button.secondary:hover { background: var(--bg); }
+
+  .hidden { display: none !important; }
+  .progress-row { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
+  .progress-label { font-size: 13px; font-weight: 700; color: var(--red); letter-spacing: 1px; white-space: nowrap; }
+  .progress-track { flex: 1; height: 8px; background: var(--white); border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--steel); border-radius: 4px; transition: width 0.3s ease; }
+  h2.question { font-size: 21px; color: var(--navy); margin: 0 0 22px; }
+  .options { display: flex; flex-direction: column; gap: 12px; }
+  .option { display: flex; align-items: center; gap: 14px; background: var(--white); border: 1.5px solid #D8DEE9; border-radius: 10px; padding: 14px 16px; cursor: pointer; font-family: inherit; font-size: 15px; text-align: left; color: var(--dark); width: 100%; }
+  .option:hover:not(:disabled) { border-color: var(--steel); }
+  .option .letter { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--navy); color: var(--white); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13.5px; }
+  .option:disabled { cursor: default; }
+  .option.correct { background: var(--green-bg); border-color: var(--green); }
+  .option.correct .letter { background: var(--green); }
+  .option.incorrect { background: var(--red-bg); border-color: var(--red); }
+  .option.incorrect .letter { background: var(--red); }
+  .option.dim { opacity: 0.45; }
+  .feedback { margin-top: 20px; border-radius: 10px; padding: 16px 18px; font-size: 14.5px; display: none; align-items: flex-start; gap: 12px; }
+  .feedback.show { display: flex; }
+  .feedback.correct-fb { background: var(--green-bg); color: #14502F; }
+  .feedback.incorrect-fb { background: var(--red-bg); color: #7A1E27; }
+  .feedback svg { width: 22px; height: 22px; flex-shrink: 0; margin-top: 1px; }
+  .feedback b { display: block; margin-bottom: 3px; font-size: 15px; }
+  .next-row { margin-top: 26px; text-align: right; display: none; }
+  .next-row.show { display: block; }
+  button.next { background: var(--navy); color: var(--white); font-size: 15px; font-weight: 700; border: none; border-radius: 8px; padding: 12px 26px; cursor: pointer; font-family: inherit; }
+  button.next:hover { filter: brightness(1.15); }
+
+  .result-banner { border-radius: 12px; padding: 30px 24px; text-align: center; margin-bottom: 26px; }
+  .result-banner.pass { background: var(--green-bg); }
+  .result-banner.fail { background: var(--red-bg); }
+  .result-icon { width: 56px; height: 56px; margin: 0 auto 12px; }
+  .result-banner.pass .result-icon { color: var(--green); }
+  .result-banner.fail .result-icon { color: var(--red); }
+  .result-score { font-size: 42px; font-weight: 800; margin: 0 0 4px; }
+  .result-banner.pass .result-score { color: var(--green); }
+  .result-banner.fail .result-score { color: var(--red); }
+  .result-status { font-size: 17px; font-weight: 700; margin: 0; }
+  .result-banner.pass .result-status { color: #14502F; }
+  .result-banner.fail .result-status { color: #7A1E27; }
+  .result-meta { background: var(--white); border-radius: 10px; padding: 16px 20px; margin-bottom: 24px; font-size: 14px; }
+  .result-meta div { display: flex; justify-content: space-between; padding: 4px 0; }
+  .result-meta div span:first-child { color: var(--grey); }
+  .result-meta div span:last-child { font-weight: 700; }
+
+  .save-status { border-radius: 10px; padding: 13px 16px; margin-bottom: 22px; font-size: 13.5px; display: flex; align-items: center; gap: 10px; }
+  .save-status svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .save-status.saved { background: var(--green-bg); color: #14502F; }
+  .save-status.local { background: #FFF6E5; color: #8A5A00; }
+
+  /* ---------- CERTIFICATE ---------- */
+  #certBlock { margin-bottom: 26px; }
+  .cert {
+    position: relative;
+    background:
+      radial-gradient(circle at 50% 50%, transparent 0, transparent 68px, rgba(22,34,61,0.025) 69px, rgba(22,34,61,0.025) 70px, transparent 71px),
+      var(--white);
+    background-size: 140px 140px;
+    border: 3px solid var(--navy);
+    border-radius: 4px;
+    padding: 0;
+    overflow: hidden;
+  }
+  .cert-frame {
+    border: 1px solid var(--ice);
+    margin: 10px;
+    border-radius: 2px;
+    padding: 40px 44px 32px;
+    position: relative;
+  }
+  .cert-frame::before, .cert-frame::after {
+    content: ""; position: absolute; width: 34px; height: 34px;
+    border: 2px solid var(--red);
+  }
+  .cert-frame::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+  .cert-frame::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+  .cert-corner-tr { position: absolute; top: -1px; right: -1px; width: 34px; height: 34px; border: 2px solid var(--red); border-left: none; border-bottom: none; }
+  .cert-corner-bl { position: absolute; bottom: -1px; left: -1px; width: 34px; height: 34px; border: 2px solid var(--red); border-right: none; border-top: none; }
+  .cert-dots { position: absolute; width: 92px; height: 92px; opacity: 0.5;
+    background-image: radial-gradient(var(--ice) 1.5px, transparent 1.5px); background-size: 10px 10px; }
+  .cert-dots.tl { top: 6px; left: 6px; }
+  .cert-dots.br { bottom: 6px; right: 6px; }
+  .cert-inner { position: relative; z-index: 1; text-align: center; }
+  .cert-seal {
+    width: 84px; height: 84px; margin: 0 auto 16px; position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cert-seal svg { width: 100%; height: 100%; }
+  .cert-eyebrow { font-size: 11.5px; font-weight: 700; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 10px; }
+  .cert-title {
+    font-size: 34px; font-weight: 800; color: var(--navy); margin: 0 0 6px;
+    letter-spacing: 4px; font-family: Georgia, "Times New Roman", serif;
+  }
+  .cert-title-rule { width: 70px; height: 3px; background: var(--red); margin: 0 auto 18px; border-radius: 2px; }
+  .cert-sub { font-size: 12.5px; color: var(--grey); margin-bottom: 22px; letter-spacing: 0.5px; }
+  .cert-name {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 30px; font-weight: 700; font-style: italic; color: var(--steel);
+    margin: 4px 0 6px; display: inline-block;
+  }
+  .cert-name-rule { width: 260px; max-width: 80%; height: 1.5px; background: var(--ice); margin: 0 auto 26px; }
+  .cert-desc { font-size: 14.5px; color: var(--dark); max-width: 460px; margin: 0 auto 8px; line-height: 1.55; }
+  .cert-course { font-size: 13px; color: var(--steel); font-weight: 700; margin-bottom: 28px; }
+  .cert-foot { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 8px; gap: 20px; flex-wrap: wrap; text-align: left; }
+  .cert-sign { flex: 1 1 200px; }
+  .cert-sign .sig-line { border-top: 1.3px solid #9AA7BE; margin-bottom: 6px; padding-top: 7px; }
+  .cert-sign b { display: block; font-size: 13.5px; color: var(--navy); }
+  .cert-sign span { font-size: 11px; color: var(--grey); }
+  .cert-meta-row { display: flex; gap: 24px; flex: 1 1 200px; justify-content: flex-end; }
+  .cert-meta-item { text-align: center; }
+  .cert-meta-item .lbl { font-size: 10px; color: var(--grey); text-transform: uppercase; letter-spacing: 0.6px; }
+  .cert-meta-item .val { font-size: 12.5px; font-weight: 700; color: var(--navy); font-family: "Courier New", monospace; }
+  .cert-duration { text-align: left; font-size: 10.5px; color: var(--grey); margin-top: 22px; }
+  button.cert-print {
+    display: block; width: 100%; background: var(--navy); color: var(--white); font-size: 15px; font-weight: 700;
+    border: none; border-radius: 10px; padding: 15px; cursor: pointer; font-family: inherit; margin-top: 16px;
+  }
+  button.cert-print:hover { filter: brightness(1.2); }
+
+  body.printing-cert #certBlock, body:not(.printing-cert) .cert-print-only { }
+  .review-list { margin-bottom: 24px; }
+  .review-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #EEF1F5; font-size: 13.5px; }
+  .review-item:last-child { border-bottom: none; }
+  .review-item svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }
+  .review-item.ok svg { color: var(--green); }
+  .review-item.bad svg { color: var(--red); }
+
+  footer.foot { text-align: center; padding: 20px; font-size: 11.5px; color: var(--grey); }
+
+  @media print {
+    nav.toc, .rules, #startScreen button, .review-list, footer.foot, section:not(#testas) { display: none !important; }
+    .wrap { box-shadow: none; }
+  }
+  body.printing-cert .hero, body.printing-cert nav.toc, body.printing-cert section:not(#testas),
+  body.printing-cert footer.foot, body.printing-cert .progress-row, body.printing-cert .result-banner,
+  body.printing-cert .result-meta, body.printing-cert .review-list, body.printing-cert #retryBtn,
+  body.printing-cert #printBtn, body.printing-cert .cert-print { display: none !important; }
+  @media print {
+    body.printing-cert .wrap { box-shadow: none; max-width: none; }
+    body.printing-cert .test-inner { padding: 0; }
+    body.printing-cert .cert { border-width: 3px; }
+    body.printing-cert { padding: 14mm; }
+    @page { margin: 0; }
+  }
+  @media (max-width: 640px) {
+    .hero, section, .test-inner { padding-left: 22px; padding-right: 22px; }
+    .hero h1 { font-size: 25px; }
+    h2 { font-size: 21px; }
+    nav.toc { overflow-x: auto; padding: 10px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="brand">UAB Samsonas · SAM-KS-MOK-009</div>
+    <h1>Kibernetinė higiena darbe</h1>
+    <p class="lead">Praktinis mokymas apie kasdienes kibernetinio saugumo taisykles, sukčiavimo atpažinimą ir saugų darbą su duomenimis. Skirta administracijos, IT, buhalterijos ir vadovų grupei.</p>
+    <div class="meta-row">
+      <span>⏱ Kurso trukmė: <b>1 akad. val. (45 min)</b></span>
+      <span>📄 12 skyrių + žinių testas</span>
+      <span>🎯 Testo riba: <b>80 %</b></span>
+    </div>
+  </div>
+
+  <nav class="toc">
+    <a href="#ivadas">Įvadas</a>
+    <a href="#slaptazodziai">Slaptažodžiai</a>
+    <a href="#paskyros">Paskyrų sauga</a>
+    <a href="#soc-inz">Soc. inžinerija</a>
+    <a href="#qr">QR kodai</a>
+    <a href="#malware">Kenkėjiška PĮ</a>
+    <a href="#di">DI grėsmės</a>
+    <a href="#mobilieji">Mobilieji įrenginiai</a>
+    <a href="#asmens-duomenys">Asmens duomenys</a>
+    <a href="#fizinis">Fizinis saugumas</a>
+    <a href="#nuotolinis">Nuotolinis darbas</a>
+    <a href="#incidentai">Incidentai</a>
+    <a href="#testas" class="test-link">→ Testas</a>
+  </nav>
+
+  <section id="ivadas">
+    <div class="eyebrow">01 · Įvadas</div>
+    <h2>Kodėl tai svarbu kiekvienam</h2>
+    <p><strong>80–90 % visų kibernetinių incidentų</strong> įvyksta ne dėl technologijų spragų, o dėl žmogiškos klaidos – paspausto įtartino mygtuko, pasidalinto slaptažodžio, neapgalvotai atidaryto priedo. Sukčiai renkasi ne stipriausią ugniasienę, o silpniausią grandį – dažniausiai tai yra žmogus, o ne serveris.</p>
+    <p>Pagal Lietuvos Respublikos kibernetinio saugumo įstatymą, visi organizacijos darbuotojai privalo išklausyti kibernetinio saugumo mokymus <strong>bent kartą per metus</strong>. Šis mokymas atitinka NKSC (Nacionalinio kibernetinio saugumo centro) rekomenduojamos „Kibernetinės higienos darbe“ programos apimtį.</p>
+    <div class="callout">
+      <div class="callout-title">Šio mokymo tikslas</div>
+      Išmokti praktiškai atpažinti sukčiavimo bandymus (el. paštu, SMS, telefonu, QR kodais), saugiai valdyti slaptažodžius ir duomenis, žinoti, kaip elgtis su fiziniu ir nuotoliniu darbo saugumu, ir suprasti, ką daryti pastebėjus grėsmę.
+    </div>
+    <details class="kcheck">
+      <summary>Pasitikrinkite žinias: kodėl sukčiai dažniausiai taikosi į žmones, o ne į sistemas?</summary>
+      <div class="kcheck-body">Todėl, kad technines apsaugos priemones (ugniasienes, šifravimą, antivirusines) apeiti yra brangu ir sudėtinga, o žmogaus pasitikėjimą, skubą ar nuovargį panaudoti – daug paprasčiau ir pigiau. Būtent todėl <b>sąmoningumas ir kritinis mąstymas</b> yra pati efektyviausia apsaugos priemonė.</div>
+    </details>
+  </section>
+
+  <section id="slaptazodziai">
+    <div class="eyebrow">02 · Prieigos valdymas</div>
+    <h2>Saugūs slaptažodžiai ir dviejų veiksnių autentifikavimas</h2>
+    <p>Automatizuoti įrankiai per sekundes išbando milijonus dažniausiai naudojamų slaptažodžių ("123456", "password", "slaptazodis") ir žodyno žodžių. Kiekvienas papildomas simbolis eksponentiškai apsunkina nulaužimą:</p>
+    <table class="crack-table">
+      <tr><td>Tik mažosios raidės</td><td>sekundės</td></tr>
+      <tr><td>+ didžiosios raidės</td><td>minutės</td></tr>
+      <tr><td>+ skaičiai, 9 simboliai</td><td>valandos</td></tr>
+      <tr><td>+ specialūs simboliai</td><td>mėnesiai</td></tr>
+      <tr><td>Visi tipai, 18 simbolių</td><td>šimtmečiai</td></tr>
+    </table>
+    <h3>Kaip sukurti stiprų, bet įsimenamą slaptažodį</h3>
+    <p>Rekomenduojamas ilgis – <strong>bent 12 simbolių</strong>, geriau 14–16+. Naudokite visų keturių tipų simbolius (didžiąsias, mažąsias raides, skaičius, specialius simbolius) ir niekada nenaudokite artimųjų vardų, gimtadienių ar populiarių terminų.</p>
+    <div class="example-box">
+      <b>Praktinis metodas – prasminga frazė + modifikacija</b>
+      Frazė: „Žąsis skrenda į pietus rugsėjį“ → Slaptažodis: <code>Žąs1skrendaĮP09</code> (raidės pakeistos simboliais, pridėti skaičiai). Tokį slaptažodį lengva prisiminti, bet sunku atspėti.
+    </div>
+    <h3>Geroji praktika</h3>
+    <ul>
+      <li>Kiekvienai paskyrai – <strong>skirtingas</strong> slaptažodis. Vieno nutekėjimas nesukelia grandininės reakcijos.</li>
+      <li>Naudokite slaptažodžių tvarkyklę – bet tik suderintą su IT skyriumi, nesisiųskite savo nuožiūra.</li>
+      <li>Keiskite slaptažodį nedelsiant po įtariamo duomenų nutekėjimo, o ne tik „pagal grafiką“ – per dažnas priverstinis keitimas skatina žmones rašyti silpnesnius, bet lengviau prisimenamus variantus.</li>
+    </ul>
+    <h3>Dviejų veiksnių autentifikavimas (2FA)</h3>
+    <p>2FA reikalauja ne tik slaptažodžio, bet ir antro, nepriklausomo patvirtinimo būdo. Net pavogus slaptažodį, be antro faktoriaus prisijungti nepavyks.</p>
+    <div class="icon-row">
+      <div class="icon-card"><b>Ką žinau</b>Slaptažodis, PIN kodas</div>
+      <div class="icon-card"><b>Ką turiu</b>Telefonas (SMS/OTP), raktas, kortelė</div>
+      <div class="icon-card"><b>Kas esu</b>Piršto atspaudas, veido atpažinimas</div>
+    </div>
+    <p>Įjunkite 2FA visur, kur įmanoma: el. paštui, VPN, debesijos paslaugoms (Microsoft 365), finansų sistemoms. Jei įmonė reikalauja jį naudoti – tai privaloma, ne pasirinktina.</p>
+    <details class="kcheck">
+      <summary>Pasitikrinkite žinias: kodėl per dažnas priverstinis slaptažodžio keitimas gali pabloginti saugumą?</summary>
+      <div class="kcheck-body">Kai žmonės priversti keisti slaptažodį kas kelis mėnesius, jie dažnai renkasi tik nežymiai pakeistą variantą (pvz., <b>Slapta1! → Slapta2!</b>) arba pradeda jį užsirašinėti – abu variantai sumažina realų saugumą. Geriau – ilgas, unikalus slaptažodis + 2FA, keičiamas tik esant realiam pagrindui.</div>
+    </details>
+  </section>
+
+  <section id="paskyros">
+    <div class="eyebrow">02 · Prieigos valdymas</div>
+    <h2>Paskyrų sauga</h2>
+    <p>Slaptažodis ir 2FA – tik pradžia. Paskyros saugumą sudaro ir kiti įpročiai, kuriuos lengva pamiršti kasdienėje rutinoje.</p>
+    <ul>
+      <li><strong>Atsijunkite iš bendrai naudojamų įrenginių</strong> – jei prisijungėte prie savo pašto ar sistemos svetimu ar bendru kompiuteriu, būtinai atsijunkite, o ne tik uždarykite naršyklę.</li>
+      <li><strong>Nesaugokite slaptažodžių naršyklėje</strong> ant bendrai naudojamų ar viešų įrenginių – tai leidžia bet kam, prisėdusiam prie kompiuterio, prisijungti be slaptažodžio.</li>
+      <li><strong>Stebėkite prisijungimo pranešimus</strong> – jei gaunate pranešimą apie prisijungimą iš neatpažintos vietos ar įrenginio, kurio jūs nevykdėte, iš karto keiskite slaptažodį ir praneškite IT skyriui.</li>
+      <li><strong>Atkūrimo (recovery) informacija</strong> – įsitikinkite, kad jūsų paskyros atkūrimo el. paštas ar telefono numeris yra jūsų paties, o ne pasenęs ar priklausantis kitam asmeniui.</li>
+      <li><strong>Neskelbkite darbinio el. pašto</strong> viešai be reikalo (forumuose, komentaruose) – tai vienas iš pirmų šaltinių, iš kurių sukčiai renka taikinius kryptingoms atakoms.</li>
+    </ul>
+    <div class="callout">
+      <div class="callout-title">Praktinis pavyzdys</div>
+      Grįžę iš atostogų pastebite el. laišką „Pastebėjome prisijungimą iš naujo įrenginio“, kurio jūs neinicijavote. Tai – rimtas signalas nedelsiant pasikeisti slaptažodį ir įjungti 2FA, net jei paskyra atrodo veikianti normaliai.
+    </div>
+    <details class="kcheck">
+      <summary>Pasitikrinkite žinias: viešbutyje prisijungėte prie savo pašto bendrame kompiuteryje. Ką svarbu padaryti prieš išeinant?</summary>
+      <div class="kcheck-body">Būtinai <b>atsijungti (Log out)</b> iš paskyros, o ne tik uždaryti naršyklės langą – uždarius langą sesija dažnai lieka aktyvi ir kitas kompiuterio naudotojas gali pasiekti jūsų paskyrą.</div>
+    </details>
+  </section>
+
+  <section id="soc-inz">
+    <div class="eyebrow">03 · Socialinė inžinerija</div>
+    <h2>Kai atakuojama ne sistema, o žmogus</h2>
+    <p>Socialinės inžinerijos atakos nukreiptos į psichologiją – pasitikėjimą, skubą, baimę ir naivumą, o ne į technines spragas. Keturi dažniausi kanalai: <strong>phishing</strong> (el. laiškai), <strong>smishing</strong> (SMS), <strong>vishing</strong> (skambučiai) ir <strong>quishing</strong> (QR kodai).</p>
+
+    <h3>Apgaulingi el. laiškai (phishing)</h3>
+    <p>Įspėjamieji ženklai:</p>
+    <ul>
+      <li>Skubinama nedelsiant paspausti nuorodą ar atidaryti priedą</li>
+      <li>Bendrinis pasisveikinimas („Gerbiamasis pone ar ponia“) vietoje jūsų vardo</li>
+      <li>Siuntėjo adresas neatitinka nurodyto prekės ženklo (pvz., @gmail.com vietoj @imone.lt)</li>
+      <li>Rašybos ar gramatikos klaidos, neįprastas formatavimas</li>
+      <li>Pasiūlymas skamba per gerai, kad būtų tiesa</li>
+    </ul>
+    <div class="callout warn">
+      <div class="callout-title">Kaip reaguoti</div>
+      Nespauskite nuorodų, nesisiųskite priedų. Užveskite pelę ant nuorodos (nespausdami) – pamatysite tikrą adresą. Pažymėkite laišką kaip kenkėjišką arba praneškite IT/saugumo atsakingam asmeniui.
+    </div>
+
+    <h3>SMS apgaulės (smishing)</h3>
+    <p>Bankai, VMI ir pašto tarnybos <strong>niekada</strong> nesiunčia SMS su tiesioginėmis nuorodomis į mokėjimus. Sukčiai gali „perimti“ ankstesnio siuntėjo pavadinimą (spoofing), todėl žinutė gali atsirasti toje pačioje pokalbių gijoje kaip ir tikros banko žinutės. Į paskyras junkitės tik per oficialią programėlę ar puslapį – niekada per SMS nuorodą.</p>
+
+    <h3>Skambučiai (vishing)</h3>
+    <p>Sukčius prisistato banko, IT ar teisėsaugos atstovu, prašo prisijungimo duomenų ar nuotolinės prieigos prie įrenginio. Požymiai: prasta garso kokybė, robotiškas balsas, dirbtinai keliama įtampa ir skuba. <strong>Bankai, ligoninės ir valstybinės įstaigos niekada neprašo slaptažodžių telefonu.</strong></p>
+
+    <h3>Kryptingos atakos: Spear Phishing ir Whaling</h3>
+    <p><strong>Spear phishing</strong> – ataka nukreipta į konkretų asmenį organizacijoje, ne masinis siuntimas; sukčius iš anksto surinko informaciją apie jus ir kolegas. <strong>Whaling</strong> – ta pati logika, bet taikinys yra vadovas ar sprendimus priimantis asmuo. Laiškas gali atrodyti kaip nuo kolegos ar partnerio, prašantis skubiai patikrinti priedą arba pakeisti mokėjimo duomenis. Reaguojant – visada patikrinkite siuntėją kitu kanalu (skambutis, gyvas susitikimas).</p>
+
+    <details class="kcheck">
+      <summary>Pasitikrinkite žinias: gaunate SMS iš „banko“ su nuoroda patvirtinti mokėjimą. Ką darote?</summary>
+      <div class="kcheck-body">Nepaspaudžiate nuorodos. Prisijungiate prie banko <b>tik per oficialią programėlę ar žinomą svetainės adresą</b>, įvestą pačiam/pačiai, ne per nuorodą žinutėje. Jei abejojate – paskambinkite bankui žinomu telefono numeriu.</div>
+    </details>
+  </section>
+
+  <section id="qr">
+    <div class="eyebrow">03 · Socialinė inžinerija</div>
+    <h2>QR kodų klastojimas (quishing) ir sutrumpintos nuorodos</h2>
+    <p>QR kodas vizualiai neatskleidžia savo turinio – nuskenavus galite būti nukreipti į kenkėjišką svetainę, atrodančią kaip patikima (bankas, el. parduotuvė).</p>
+    <p><strong>Realūs pavyzdžiai:</strong> netikras QR kodas ant parkavimo automato, nukreipiantis į suklastotą mokėjimo puslapį; pakeistas QR kodas restorano meniu, prašantis „prisijungti“ ar atsisiųsti kenkėjišką programėlę; el. laiškas su QR kodu, tariamai iš banko ar kurjerio, raginantis „patvirtinti paskyrą“.</p>
+    <h3>Kaip patikrinti prieš skenuojant</h3>
+    <ol>
+      <li>Įvertinkite fizinę aplinką – ar kodas neužklijuotas ant kito kodo (netvarkingi kraštai, keli sluoksniai)?</li>
+      <li>Patikrinkite kontekstą – ar QR kodas čia logiškas, ar tik siūlo „prizą“ / „atnaujinti banko duomenis“?</li>
+      <li>Įvertinkite šaltinio patikimumą – ar kodas pateiktas kartu su aiškiu prekės ženklu?</li>
+      <li>Peržiūrėkite URL prieš atidarydami – patikrinkite <strong>virustotal.com/gui/home/url</strong> arba <strong>iv.lt/whois</strong>.</li>
+      <li>Stebėkite prašomus veiksmus – prašymas skubiai vesti duomenis yra rimtas įspėjimas.</li>
+    </ol>
+    <p>Saugiausia – naudoti paprastą telefono kamerą, o ne atskiras QR skenavimo programėles.</p>
+    <h3>Sutrumpintos nuorodos (bit.ly, tinyurl.com ir kt.)</h3>
+    <p>Nuorodų trumpinimo paslaugos slepia tikrąjį adresą – tai gali paslėpti ir kenkėjišką svetainę. Prieš atidarydami, patikrinkite adresą per <strong>virustotal.com</strong> arba <strong>iv.lt/whois</strong> (domeno registracijos data, istorija, variacijos).</p>
+    <details class="kcheck">
+      <summary>Pasitikrinkite žinias: restorano stalo QR kodas siūlo „laimėti telefoną“. Ar tai normalu?</summary>
+      <div class="kcheck-body">Ne. Restorano QR kodas logiškai turėtų vesti į meniu ar mokėjimą – ne į loterijas ar prizus. Toks neatitikimas tarp konteksto ir pasiūlymo yra <b>klasikinis klastojimo požymis</b>.</div>
+    </details>
+  </section>
+
+  <section id="malware">
+    <div class="eyebrow">04 · Kenkėjiška programinė įranga</div>
+    <h2>Kaip atpažinti užkrėstą įrenginį</h2>
+    <p>Kenkėjiška programinė įranga (angl. <em>malware</em>) – tai tikslingai sukurta kenksminga programinė įranga, kuri, įsiskverbusi į įrenginį ar tinklą, gali pavogti informaciją, užrakinti failus, sugadinti sistemas ir sukelti didžiulį sąmyšį visoje organizacijoje. Tikslas dažniausiai – piniginė nauda arba sabotažas.</p>
+    <h3>Dažniausi tipai</h3>
+    <ul>
+      <li><strong>Kompiuteriniai virusai</strong> – plinta prisikabindami prie failų ir programų.</li>
+      <li><strong>Išpirkos reikalaujanti programa (ransomware)</strong> – užšifruoja failus ir reikalauja sumokėti už jų atrakinimą.</li>
+      <li><strong>Šnipinėjimo programa (spyware)</strong> – slapta renka informaciją apie naudotoją ir jo veiksmus.</li>
+      <li><strong>Kompiuteriniai kirminai</strong> – savarankiškai plinta tinklu iš vieno įrenginio į kitą.</li>
+    </ul>
+    <h3>Požymiai, galintys padėti atpažinti užkrėtimą</h3>
+    <div class="icon-row">
+      <div class="icon-card"><b>Veikimo sulėtėjimas</b>Staigus ir nepaaiškinamas sulėtėjimas, dažni strigimai ar netikėti persikrovimai</div>
+      <div class="icon-card"><b>Neįprastas aktyvumas</b>Didelis CPU/RAM naudojimas ar intensyvus interneto srautas net nieko neveikiant</div>
+      <div class="icon-card"><b>Apsaugos gedimai</b>Netikėtai išsijungusi antivirusinė ar ugniasienė, negalima jos vėl įjungti</div>
+      <div class="icon-card"><b>Failų pokyčiai</b>Failai užšifruoti (naujas plėtinys), dingę arba rodomas išpirkos reikalavimas</div>
+      <div class="icon-card"><b>Iššokantys langai</b>Nuolat pasirodo nepageidaujamos reklamos ar įspėjimai, net nenaršant internete</div>
+      <div class="icon-card"><b>Laiškai jūsų vardu</b>Kolegos gauna iš jūsų adreso laiškų (spam), kurių jūs nesiuntėte</div>
+    </div>
+    <div class="callout warn">
+      <div class="callout-title">Ką daryti pastebėjus požymius</div>
+      Nedelsdami kreipkitės į organizacijos IT specialistus. Įrenginį atjunkite nuo tinklo (išjunkite Wi-Fi/laidą), o kai nurodys IT – paleiskite pilną sistemos skenavimą ir pakeiskite slaptažodžius. Nemėginkite patys „taisyti“ – tai gali sunaikinti duomenis, reikalingus tyrimui.
+    </div>
+    <details class="kcheck">
+      <summary>Pasitikrinkite žinias: kompiuteris netikėtai sulėtėjo ir atsivėrė iššokantis langas su nežinoma programa ar reklama, kurios neįdiegėte. Ką darote?</summary>
+      <div class="kcheck-body">Atjungiate įrenginį nuo tinklo ir kreipiatės į IT skyrių. Nespaudžiate jokių papildomų mygtukų iššokančiame lange ir nebandote jo patys uždaryti neįprastais būdais.</div>
+    </details>
+  </section>
+
+  <section id="di">
+    <div class="eyebrow">04 · Kenkėjiška programinė įranga</div>
+    <h2>Dirbtinio intelekto keliamos naujos grėsmės</h2>
+    <p>DI generuotas tekstas vis sunkiau atskiriamas nuo žmogaus rašyto – kartu su greitai surenkama viešai prieinama informacija (LinkedIn, socialiniai tinklai) sukuriamas itin įtikinantis apgaulingas laiškas be įprastų kalbos klaidų.</p>
+    <h3>Balso klonavimas (voice cloning)</h3>
+    <p>Skambutis su tyla ar keistais garsais gali reikšti, kad įrašinėjamas jūsų balsas vėlesniam klastojimui. Sintetintas artimo ar vadovo balsas gali skambėti itin įtikinamai, ypač jei sukčius jau turi trumpą originalų balso įrašą (pvz., iš viešo vaizdo įrašo).</p>
+    <div class="callout">
+      <div class="callout-title">Ką daryti</div>
+      Neatsakinėkite į įtartinus laiškus ar SMS, venkite bendrauti telefonu su nepažįstamais asmenimis. Neskubiai priimtą sprendimą (ypač dėl pinigų ar duomenų) visada patikrinkite kitu komunikacijos kanalu – paskambinkite žinomu numeriu arba susisiekite gyvai.
+    </div>
+    <h3>DI įrankiai darbe – konfidencialumo rizika</h3>
+    <p>Vis daugiau darbuotojų naudoja viešus DI pokalbių įrankius (ChatGPT, Copilot ir pan.) kasdieniam darbui palengvinti. Tačiau tai, ką įvedate į tokį įrankį, gali būti saugoma trečiosios šalies serveriuose ir panaudojama modelio mokymui.</p>
+    <ul>
+      <li>Nekelkite į viešus DI įrankius <strong>konfidencialių įmonės dokumentų, klientų duomenų ar asmens duomenų</strong>, nebent tai aiškiai leidžia organizacijos politika.</li>
+      <li>DI sugeneruotą tekstą ar analizę visada patikrinkite prieš naudodami – modeliai gali įtikinamai suformuluoti neteisingą informaciją („haliucinacija“).</li>
+      <li>Atkreipkite dėmesį, kad ir vaizdo klastotės (deepfake) tampa vis įtikinamesnės – neįprastas mirksėjimas, šešėliai ar lūpų sinchronizacija gali būti požymis, bet dažnai klastotę pastebėti sunku, todėl svarbiausia lieka kontekstinis tikrinimas, o ne pati vaizdo analizė.</li>
+    </ul>
+    <details class="kcheck">
+      <summary>Pasitikrinkite žinias: gaunate skambutį, kuriame "vadovo balsas" prašo skubiai pervesti pinigus. Ką darote?</summary>
+      <div class="kcheck-body">Nesiimate veiksmų telefonu. Padedate ragelį ir <b>patikrinate prašymą kitu kanalu</b> – paskambinate vadovui žinomu (ne skambučio metu gautu) numeriu arba susisiekiate gyvai.</div>
+    </details>
+  </section>
+
+  <section id="mobilieji">
+    <div class="eyebrow">05 · Mobiliųjų įrenginių sauga</div>
+    <h2>Saugus mobiliųjų įrenginių naudojimas</h2>
+    <p>Telefonas ar planšetė dažnai turi prieigą prie darbinio pašto, dokumentų ar 2FA kodų – todėl jų sauga tiesiogiai veikia ir organizacijos saugumą.</p>
+    <ul>
+      <li><strong>Ekrano užraktas</strong> – naudokite PIN kodą, piršto atspaudą ar veido atpažinimą. Įrenginys be užrakto, patekęs į netinkamas rankas, atveria prieigą prie visko, kas jame yra.</li>
+      <li><strong>Programėlės tik iš oficialių parduotuvių</strong> (Google Play, App Store) – venkite programėlių iš neaiškių šaltinių (APK failų, trečiųjų šalių svetainių).</li>
+      <li><strong>Peržiūrėkite programėlių leidimus</strong> – jei žibintuvėlio programėlė prašo prieigos prie kontaktų ar mikrofono, tai įtartina.</li>
+      <li><strong>Reguliariai atnaujinkite</strong> operacinę sistemą ir programėles – atnaujinimai dažnai uždaro saugumo spragas.</li>
+      <li><strong>Venkite viešų USB įkrovimo prievadų</strong> (oro uostuose, viešose vietose) – per juos galima perduoti kenkėjišką programinę įrangą ("juice jacking"). Naudokite savo kroviklį su elektros lizdu arba nešiojamą baterijos bloką.</li>
+      <li><strong>Bluetooth</strong> junkite tik kai reikia, ir tik su žinomais įrenginiais.</li>
+    </ul>
+    <div class="callout warn">
+      <div class="callout-title">Pametus ar pavogus įrenginį</div>
+      Nedelsdami praneškite IT skyriui – bus galima nuotoliniu būdu užrakinti ar išvalyti įrenginio duomenis (jei ši funkcija įjungta). Taip pat pakeiskite svarbiausių paskyrų slaptažodžius.
+    </div>
+    <details class="kcheck">
+      <summary>Pasitikrinkite žinias: oro uoste pastebite laisvą USB įkrovimo stotelę. Ar saugu ja naudotis darbiniam telefonui?</summary>
+      <div class="kcheck-body">Geriau ne – per viešą USB prievadą galima perduoti kenkėjišką programinę įrangą ar nuskaityti duomenis. Saugiau naudoti savo kroviklį, prijungtą prie elektros lizdo, arba nešiojamą baterijos bloką.</div>
+    </details>
+  </section>
+
+  <section id="asmens-duomenys">
+    <div class="eyebrow">06 · Asmens duomenų apsauga</div>
+    <h2>Asmens duomenų apsauga darbe</h2>
+    <p>Asmens duomenys – bet kokia informacija, susijusi su identifikuotu ar identifikuojamu fiziniu asmeniu: vardai, identifikavimo numeriai, kontaktai, vietos duomenys ir kt. Darbo metu susiduriate su kolegų, klientų ar partnerių duomenimis, o jų tvarkymą reglamentuoja BDAR ir organizacijos vidinės taisyklės.</p>
+    <h3>Pagrindiniai principai darbuotojui</h3>
+    <ul>
+      <li><strong>Būtinumo (minimalumo) principas</strong> – tvarkykite tik tuos duomenis, kurie būtini jūsų darbo funkcijoms atlikti, ir naudokite juos tik tam tikslui.</li>
+      <li><strong>Konfidencialumas</strong> – neatskleiskite informacijos kolegoms ar kitiems asmenims, kurie neturi teisės jos matyti.</li>
+      <li><strong>Saugus perdavimas</strong> – nesiųskite asmens duomenų per asmeninį el. paštą, asmenines debesijos paslaugas ar nešifruotus kanalus.</li>
+      <li><strong>Saugus laikymas</strong> – popierinius dokumentus su asmens duomenimis laikykite užrakintose vietose, o nebereikalingus susmulkinkite, o ne meskite į paprastą šiukšlių dėžę.</li>
+    </ul>
+    <h3>Asmenų teisės, kurias privalote padėti užtikrinti</h3>
+    <p>Asmenys turi teisę gauti informaciją apie savo duomenų tvarkymą, su jais susipažinti, reikalauti ištaisyti ar ištrinti („teisė būti pamirštam“), apriboti tvarkymą bei nesutikti su tvarkymu.</p>
+    <div class="callout warn">
+      <div class="callout-title">72 valandų taisyklė ir baudos</div>
+      Įvykus duomenų saugumo pažeidimui, organizacija privalo pranešti Valstybinei duomenų apsaugos inspekcijai <strong>per 72 valandas</strong> (nebent pažeidimas nekelia pavojaus žmonių teisėms ir laisvėms). Todėl darbuotojas apie įtariamą pažeidimą turi pranešti <strong>nedelsiant</strong>. Už tvarkos nesilaikymą organizacijoms gali grėsti baudos iki <strong>10–20 mln. EUR</strong> arba iki <strong>2–4 % pasaulinės metinės apyvartos</strong>.
+    </div>
+    <details class="kcheck">
+      <summary>Pasitikrinkite žinias: netyčia išsiuntėte el. laišką su klientų sąrašu ne tam adresatui. Ką darote?</summary>
+      <div class="kcheck-body">Nedelsdami praneškite atsakingam asmeniui organizacijoje (BDAR/saugumo koordinatoriui). BDAR numato, kad apie pažeidimą reikia pranešti per 72 valandas – kuo greičiau pranešama, tuo lengviau sumažinti žalą ir galimas baudas.</div>
+    </details>
+  </section>
+
+  <section id="fizinis">
+    <div class="eyebrow">07 · Fizinis saugumas</div>
+    <h2>Darbo vietos, prieigos ir įrangos apsauga</h2>
+    <p>Fizinis saugumas – tai priemonės, užtikrinančios, kad prie įrangos, patalpų ir dokumentų prieitų tik įgalioti asmenys. Net stipriausia techninė apsauga nepadeda, jei pašalinis asmuo gali fiziškai prieiti prie neužrakinto kompiuterio.</p>
+    <h3>Prieigos kontrolė</h3>
+    <p>Prieigos kontrolė reiškia, kad tik tam tikri asmenys gali patekti į tam tikras vietas (pvz., tik IT darbuotojai – į serverinę). Naudojamos priemonės: rakinamos spynos, elektroninės įėjimo kortelės, veido ar pirštų atspaudų atpažinimo sistemos. Svarbiausia – nuosekliai taikyti būtent tas priemones, kurios numatytos jūsų organizacijoje.</p>
+    <h3>Prevencija ir vaizdo stebėjimas</h3>
+    <p>Vaizdo stebėjimo sistemos atlieka tris pagrindines funkcijas: svarbiausių patalpų stebėjimą realiu laiku, teisinių įrodymų rinkimą (medžiaga gali būti panaudota incidentų tyrimuose) ir atgrasymą nuo vagysčių bei piktavališkos veiklos.</p>
+    <h3>Fizinių saugyklų priežiūra ir įrangos utilizavimas</h3>
+    <div class="icon-row">
+      <div class="icon-card"><b>Saugus laikymas</b>Svarbūs dokumentai ir įranga – seifuose, rakinamuose stalčiuose ar patalpose, prieinamose tik įgaliotiems asmenims</div>
+      <div class="icon-card"><b>USB laikmenos</b>Nejunkite rastų ar svetimų USB – dažnas kenkėjiškos programinės įrangos šaltinis; darbo įrenginiuose geriausia jų nenaudoti visai</div>
+      <div class="icon-card"><b>Pašaliniai asmenys</b>Nepažįstamus laikykite lankytojais, išduokite korteles, nepalikite be priežiūros, palydėkite iki išėjimo</div>
+      <div class="icon-card"><b>Nebenaudojama įranga</b>Prieš utilizavimą duomenys turi būti saugiai ir visiškai ištrinti – net sena įranga gali saugoti atkuriamą informaciją</div>
+    </div>
+    <div class="callout warn">
+      <div class="callout-title">Kodėl svarbu tinkamai sutvarkyti nebenaudojamą įrangą</div>
+      Net retai naudojama ar pasenusi įranga gali saugoti duomenis, kurių atkūrimas keltų grėsmę organizacijai ir pažeistų BDAR. Kibernetiniai nusikaltėliai aktyviai ieško organizacijoms nebereikalingos įrangos, tikėdamiesi atkurti joje likusią informaciją, todėl būtina griežtai laikytis nurašymo ir saugaus utilizavimo procedūrų.
+    </div>
+    <h3>„Švaraus stalo“ politika</h3>
+    <p>Palikdami darbo vietą įsitikinkite, kad matomoje ar neapsaugotoje vietoje neliko atrakinto kompiuterio, dokumentų ar kitų vertingų daiktų.</p>
+    <ul>
+      <li>Užrakinkite kompiuterį net trumpam atsitraukdami (Windows: <strong>Win+L</strong>)</li>
+      <li>Dokumentus laikykite užrakintuose stalčiuose, o prieš išmesdami – susmulkinkite</li>
+      <li>Nepalikite telefonų, USB, raktų ar kortelių atviroje vietoje</li>
+      <li>Nerašykite slaptažodžių ant lipdukų</li>
+    </ul>
+    <details class="kcheck">
+      <summary>Pasitikrinkite žinias: prie jūsų darbo vietos prieina nepažįstamas asmuo su darbo apranga ir sako esąs kviestas technikas, prašo trumpam palikti jį prie neužrakinto kompiuterio. Ką darote?</summary>
+      <div class="kcheck-body">Neatskleidžiate prieigos ir neužrakinto kompiuterio nepaliekate, net jei asmuo atrodo patikimas ir draugiškas. Pasiteiraujate vizito tikslo, patikrinate pas atsakingą asmenį / vadovą, ar toks technikas tikrai kviestas, ir nepaliekate lankytojo be priežiūros. Tai klasikinis pašalinio asmens patekimo (social engineering) bandymas.</div>
+    </details>
+  </section>
+
+  <section id="nuotolinis">
+    <div class="eyebrow">08 · Nuotolinis darbas</div>
+    <h2>Saugus darbas iš namų ar kitos vietos</h2>
+    <div class="icon-row">
+      <div class="icon-card"><b>Prieigos kontrolė</b>Užrakinkite nenaudojamus įrenginius, dirbkite ten, kur pašaliniai negirdėtų konfidencialios informacijos</div>
+      <div class="icon-card"><b>Patikimas tinklas</b>Venkite viešų Wi-Fi tinklų – jungdamiesi visada naudokite organizacijos patvirtintą VPN</div>
+      <div class="icon-card"><b>Konfidencialūs dokumentai</b>Laikykite užrakintose vietose, o ne matomi kitiems namų nariams ar svečiams</div>
+    </div>
+    <p>Jei VPN naudoti laikinai negalite, svarbias užduotis geriau atidėkite, kol tai galėsite padaryti saugioje aplinkoje. Viešieji Wi-Fi tinklai dažnai neturi tinkamų saugumo atnaujinimų ir šifravimo.</p>
+    <details class="kcheck">
+      <summary>Pasitikrinkite žinias: dirbate kavinėje ir norite prisijungti prie darbo sistemos per kavinės Wi-Fi. Ar tai saugu?</summary>
+      <div class="kcheck-body">Tik jei jungiatės per organizacijos patvirtintą <b>VPN</b>. Be VPN viešas Wi-Fi tinklas nesuteikia pakankamos apsaugos jautriems duomenims.</div>
+    </details>
+  </section>
+
+  <section id="incidentai">
+    <div class="eyebrow">09 · Incidentų valdymas</div>
+    <h2>Ką daryti gavus įtartiną pranešimą</h2>
+    <div class="icon-row">
+      <div class="icon-card"><b>1. STOP</b>Neskubėkite atidaryti pranešimų, spausti nuorodų ar vykdyti prašomų veiksmų</div>
+      <div class="icon-card"><b>2. PATIKRINK</b>Apsvarstykite, ar laiškas gautas netikėtai ir kokia jo gavimo priežastis</div>
+      <div class="icon-card"><b>3. PRANEŠK</b>Informuokite už saugumą atsakingą asmenį arba pažymėkite kaip kenkėjišką</div>
+    </div>
+    <p>Jei suvedėte prisijungimo duomenis: nedelsdami pasikeiskite slaptažodį, įjunkite 2FA ir informuokite IT/saugumo komandą. Jei kilo grėsmė finansams – nedelsdami informuokite banką.</p>
+    <h3>Kam pranešti apie kibernetinį incidentą</h3>
+    <p>Įvykus incidentui, svarbi greita reakcija ir atvirumas. Pirmiausia įsivertinkite, kokius veiksmus galite atlikti patys, tada kreipkitės į organizacijoje už kibernetinį saugumą atsakingą asmenį ar skyrių. Kai to neužtenka arba pastebite nusikalstamos veiklos požymių, galite kreiptis ir šiais kontaktais:</p>
+    <p><strong>1. Organizacijos viduje</strong> – pirmiausia visada kreipkitės į organizacijoje už kibernetinį/informacijos saugumą atsakingą asmenį ar IT skyrių. Jie žino organizacijos procedūras ir gali greičiausiai sumažinti žalą.</p>
+    <p><strong>2. Nacionalinis kibernetinio saugumo centras (NKSC)</strong> – pranešti apie įtartiną veiklą:</p>
+    <ul>
+      <li>Pranešimo forma: <strong>nksc.lt/pranesti.html</strong></li>
+      <li>El. paštas: <strong>cert@nksc.lt</strong></li>
+      <li>Telefonas: <strong>1843</strong></li>
+    </ul>
+    <p><strong>3. Valstybinė duomenų apsaugos inspekcija (VDAI)</strong> – jei incidentas susijęs su asmens duomenų saugumo pažeidimu (pranešti reikia per 72 val.):</p>
+    <ul>
+      <li>Svetainė: <strong>vdai.lrv.lt</strong></li>
+      <li>El. paštas: <strong>ada@ada.lt</strong></li>
+      <li>Telefonas: <strong>+370 5 271 2804</strong></li>
+    </ul>
+    <p><strong>4. Esant nusikalstamos veikos požymiams</strong> – Lietuvos kriminalinės policijos biuras: <strong>epolicija.lt</strong> arba <strong>112</strong>.</p>
+    <details class="kcheck">
+      <summary>Pasitikrinkite žinias: pastebėjote, kad galbūt paspaudėte kenkėjišką nuorodą ir įvedėte savo darbo slaptažodį. Kokia jūsų pirmoji veiksmų seka?</summary>
+      <div class="kcheck-body">1) Nedelsdami pakeičiate slaptažodį; 2) įjungiate 2FA, jei dar neįjungta; 3) informuojate organizacijos IT/saugumo atsakingą asmenį – <b>net jei gėda dėl klaidos</b>. Greitas pranešimas sumažina žalą daug labiau nei tylėjimas.</div>
+    </details>
+  </section>
+
+  <section>
+    <div class="eyebrow">Apibendrinimas</div>
+    <h2>Pagrindinės taisyklės, kurias verta įsiminti</h2>
+    <ul>
+      <li>Ilgas, unikalus slaptažodis kiekvienai paskyrai + 2FA visur, kur įmanoma</li>
+      <li>Nespauskite nuorodų ir nesisiųskite priedų iš netikėtų ar įtartinų laiškų/SMS</li>
+      <li>Skambučiu ar žinute prašomus skubius veiksmus visada tikrinkite kitu kanalu</li>
+      <li>QR kodus ir sutrumpintas nuorodas tikrinkite prieš skenuodami/spausdami</li>
+      <li>Nekelkite konfidencialių duomenų į viešus DI įrankius</li>
+      <li>Telefoną/planšetę užrakinkite ekrano užraktu, programėles diekitės tik iš oficialių parduotuvių</li>
+      <li>Asmens duomenimis dalykitės tik pagal būtinumo principą ir saugiais kanalais</li>
+      <li>Užrakinkite darbo vietą, dokumentus ir įrenginius, kai jų nenaudojate</li>
+      <li>Nuotoliniam darbui – tik patvirtintas VPN, jokių viešų Wi-Fi tinklų svarbioms užduotims</li>
+      <li>Pastebėję grėsmę: <strong>STOP – PATIKRINK – PRANEŠK</strong></li>
+    </ul>
+    <p>Dabar pereikite prie žinių patikrinimo testo apačioje.</p>
+  </section>
+
+  <section id="testas" style="padding:0; border-bottom:none;">
+  <div style="background:var(--bg);">
+  <div class="test-inner">
+
+    <div id="startScreen">
+      <div class="test-intro-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+      <h2 class="test-title">Žinių patikrinimo testas</h2>
+      <p class="test-sub">15 klausimų · reikia bent 80&nbsp;% teisingų atsakymų</p>
+      <ul class="rules">
+        <li>Kiekvienam klausimui pasirinkite vieną atsakymą – iškart pamatysite, ar jis teisingas, ir trumpą paaiškinimą.</li>
+        <li>Testo pabaigoje automatiškai pamatysite savo rezultatą ir ar testas įskaitytas.</li>
+        <li>Neįskaičius testo, galėsite jį kartoti iš naujo.</li>
+      </ul>
+      <div class="field"><label for="fName">Vardas, pavardė</label><input type="text" id="fName" placeholder="Vardenis Pavardenis"></div>
+      <div class="field"><label for="fDept">Pareigos</label><input type="text" id="fDept" placeholder="Pvz., vadybininkas"></div>
+      <button class="primary" id="startBtn">Pradėti testą</button>
+    </div>
+
+    <div class="hidden" id="quizScreen">
+      <div class="progress-row">
+        <span class="progress-label" id="progressLabel">KLAUSIMAS 1/15</span>
+        <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:6.7%"></div></div>
+      </div>
+      <h2 class="question" id="questionText"></h2>
+      <div class="options" id="optionsList"></div>
+      <div class="feedback" id="feedbackBox"></div>
+      <div class="next-row" id="nextRow"><button class="next" id="nextBtn">Kitas klausimas →</button></div>
+    </div>
+
+    <div class="hidden" id="resultScreen">
+      <div class="result-banner" id="resultBanner">
+        <div class="result-icon" id="resultIcon"></div>
+        <p class="result-score" id="resultScore"></p>
+        <p class="result-status" id="resultStatus"></p>
+      </div>
+      <div class="result-meta">
+        <div><span>Vardas, pavardė</span><span id="metaName">—</span></div>
+        <div><span>Pareigos</span><span id="metaDept">—</span></div>
+        <div><span>Data</span><span id="metaDate">—</span></div>
+      </div>
+      <div id="saveStatus" class="save-status hidden"></div>
+      <div class="review-list" id="reviewList"></div>
+
+      <div class="hidden" id="certBlock">
+        <div class="cert">
+          <div class="cert-frame">
+            <div class="cert-dots tl"></div>
+            <div class="cert-dots br"></div>
+            <div class="cert-inner">
+              <div class="cert-seal">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="47" fill="none" stroke="#16223D" stroke-width="2"/>
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#E63946" stroke-width="1.4"/>
+                  <circle cx="50" cy="50" r="34" fill="#16223D"/>
+                  <path d="M50 26 30 34v14c0 12 8 21 20 26 12-5 20-14 20-26V34L50 26Z" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+                  <path d="m42 50 6 6 12-12" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <g fill="#CADCFC">
+                    <circle cx="50" cy="10" r="2"/><circle cx="68" cy="15" r="1.6"/><circle cx="82" cy="28" r="1.6"/>
+                    <circle cx="88" cy="50" r="2"/><circle cx="82" cy="72" r="1.6"/><circle cx="68" cy="85" r="1.6"/>
+                    <circle cx="50" cy="90" r="2"/><circle cx="32" cy="85" r="1.6"/><circle cx="18" cy="72" r="1.6"/>
+                    <circle cx="12" cy="50" r="2"/><circle cx="18" cy="28" r="1.6"/><circle cx="32" cy="15" r="1.6"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="cert-eyebrow">UAB Samsonas · SAM-KS-MOK-009</div>
+              <h2 class="cert-title">SERTIFIKATAS</h2>
+              <div class="cert-title-rule"></div>
+              <p class="cert-sub">ŠIUO SERTIFIKATU PAŽYMIMA, KAD</p>
+              <div class="cert-name" id="certName">—</div>
+              <div class="cert-name-rule"></div>
+              <p class="cert-desc">dalyvavo mokymuose ir sėkmingai išlaikė žinių patikrinimo testą</p>
+              <p class="cert-course">„KIBERNETINĖ HIGIENA DARBE“ · rezultatas <span id="certScore">—</span></p>
+              <div class="cert-foot">
+                <div class="cert-sign">
+                  <div class="sig-line"><b>Andrejus Smolskis</b><span>KS vadovas, UAB Samsonas</span></div>
+                </div>
+                <div class="cert-meta-row">
+                  <div class="cert-meta-item"><div class="lbl">Data</div><div class="val" id="certDate">—</div></div>
+                  <div class="cert-meta-item"><div class="lbl">Serijos Nr.</div><div class="val" id="certSerial">—</div></div>
+                </div>
+              </div>
+              <p class="cert-duration">Kurso trukmė – 1 akad. val.</p>
+            </div>
+          </div>
+        </div>
+        <button class="cert-print" id="certPrintBtn">🖨️ Atsispausdinti / išsaugoti sertifikatą (PDF)</button>
+      </div>
+      <button class="secondary" id="printBtn">🖨️ Atsispausdinti rezultatą</button>
+      <button class="primary" id="retryBtn" style="margin-top:12px;">Kartoti testą (bandymų kiekis neribotas)</button>
+    </div>
+
+  </div>
+  </div>
+  </section>
+
+  <footer class="foot">UAB SAMSONAS · Kibernetinio saugumo mokymai · SAM-KS-MOK-009</footer>
+</div>
+
+<script>
+const QUESTIONS = [
+  { q: "Kuris iš šių slaptažodžių yra saugiausias?",
+    opts: ["vasara2025", "Petras1985", "K@va!Rytas7Debesys", "qwerty12345"],
+    correct: 2,
+    explain: "Ilgas (16+ simbolių), su didžiosiomis/mažosiomis raidėmis, skaičiais, specialiais simboliais ir be lengvai atspėjamų asmeninių duomenų (vardo, metų)." },
+  { q: "Kas yra dviejų veiksnių autentifikavimas (2FA)?",
+    opts: ["Du skirtingi slaptažodžiai tai pačiai paskyrai", "Prisijungimas iš dviejų įrenginių vienu metu",
+           "Tapatybės patvirtinimas dviem skirtingais būdais (pvz., slaptažodis + kodas telefone)", "Slaptažodžio keitimas du kartus per metus"],
+    correct: 2,
+    explain: "2FA reikalauja antro, nepriklausomo patvirtinimo būdo – net pavogus slaptažodį, prisijungti nepavyks." },
+  { q: "Kuris požymis DIDŽIAUSIAI kelia įtarimą, kad gautas el. laiškas yra apgaulingas (phishing)?",
+    opts: ["Laiškas parašytas lietuvių kalba", "Laiške yra jūsų organizacijos logotipas",
+           "Reikalaujama nedelsiant paspausti nuorodą ir suvesti prisijungimo duomenis", "Laiškas gautas darbo dienos metu"],
+    correct: 2,
+    explain: "Skuba ir prašymas suvesti duomenis yra klasikinis socialinės inžinerijos požymis." },
+  { q: "Gaunate SMS žinutę, tariamai iš banko, su nuoroda „patvirtinti mokėjimą“. Ką turėtumėte daryti?",
+    opts: ["Paspausti nuorodą ir suvesti duomenis, jei žinutė atrodo įtikinamai",
+           "Neatidaryti nuorodos, o prisijungti prie banko tik per oficialią programėlę ar svetainę",
+           "Persiųsti žinutę kolegoms, kad sužinotų jų nuomonę", "Atsakyti į žinutę, paprašant daugiau informacijos"],
+    correct: 1,
+    explain: "Bankai niekada nesiunčia SMS su tiesioginėmis mokėjimo nuorodomis." },
+  { q: "Kokie požymiai būdingi apgaulingam telefono skambučiui (vishing)?",
+    opts: ["Skambinantysis prisistato žinomos institucijos atstovu ir prašo prisijungimo duomenų",
+           "Skambinantysis kalba ramiai, be jokio spaudimo", "Skambučio numeris yra jūsų kolegos", "Skambutis vyksta darbo valandomis"],
+    correct: 0,
+    explain: "Bankai, ligoninės ir valstybinės įstaigos niekada neprašo slaptažodžių telefonu." },
+  { q: "Ką reikėtų padaryti prieš skenuojant QR kodą, rastą viešoje vietoje?",
+    opts: ["Iškart skenuoti – QR kodai visada saugūs",
+           "Patikrinti, ar kodas neužklijuotas ant kito kodo, ir po skenavimo įvertinti rodomą nuorodos adresą",
+           "Skenuoti tik naudojant trečiųjų šalių QR skaitymo programėlę", "Paklausti praeivio, ar kodas saugus"],
+    correct: 1,
+    explain: "Fizinė patikra + URL patikra prieš atidarant – pagrindinė apsauga nuo quishing." },
+  { q: "Kuris iš šių POŽYMIŲ gali reikšti, kad įrenginys užkrėstas kenkėjiška programine įranga?",
+    opts: ["Įrenginys veikia greičiau nei įprastai", "Netikėtai išsijungusi antivirusinė programa ir dažni sistemos strigimai",
+           "Baterija ilgiau laiko įkrovą", "Padaugėjo laisvos vietos diske"],
+    correct: 1,
+    explain: "Savavališkai išsijungusi apsauga ir dažni strigimai – tipiniai užkrėtimo požymiai." },
+  { q: "Kas yra „švaraus stalo“ politika?",
+    opts: ["Reikalavimas darbo vietoje nelaikyti jokių augalų ar asmeninių daiktų",
+           "Reikalavimas kasdien nuvalyti stalą valymo priemonėmis",
+           "Reikalavimas, pasitraukus nuo darbo vietos, nepalikti matomoje vietoje atrakinto kompiuterio, dokumentų ar kitų jautrių daiktų",
+           "Rekomendacija dirbti be jokių popierinių dokumentų"],
+    correct: 2,
+    explain: "Tikslas – apsaugoti informaciją, kai darbuotojas laikinai atsitraukia nuo darbo vietos." },
+  { q: "Kas rekomenduojama jungiantis prie darbo sistemų dirbant nuotoliniu būdu?",
+    opts: ["Naudoti bet kokį laisvą viešą Wi-Fi tinklą", "Naudoti organizacijos patvirtintą VPN ir vengti viešų tinklų",
+           "Išjungti visas saugumo priemones, kad būtų greičiau", "Dirbti tik per trečiųjų šalių nemokamas programėles"],
+    correct: 1,
+    explain: "VPN šifruoja duomenis – viešas Wi-Fi be VPN dažnai neturi tinkamos saugos." },
+  { q: "Ką reiškia principas STOP – PATIKRINK – PRANEŠK?",
+    opts: ["Iškart ištrinti visus įtartinus laiškus, nieko nesakant niekam",
+           "Neskubėti reaguoti į įtartiną pranešimą, apsvarstyti jo kilmę ir pranešti atsakingam asmeniui",
+           "Atsakyti sukčiui, kad jis daugiau nebandytų", "Persiųsti įtartiną laišką visiems kolegoms"],
+    correct: 1,
+    explain: "Greita, bet apgalvota reakcija ir pranešimas – geriausia apsauga visai organizacijai." },
+  { q: "Gaunate el. laišką iš pažįstamo kolegos el. pašto adreso, prašantį skubiai pakeisti tiekėjo banko sąskaitos numerį prieš apmokant sąskaitą. Ką darote?",
+    opts: ["Iš karto pakeičiate duomenis, nes laiškas iš žinomo adreso",
+           "Patvirtinate pakeitimą telefonu, paskambinę kolegai žinomu (ne laiške nurodytu) numeriu, prieš keisdami duomenis",
+           "Atsakote į tą patį laišką klausdami patvirtinimo", "Persiunčiate laišką buhalterijai, kad jie nuspręstų"],
+    correct: 1,
+    explain: "Sąskaitos rekvizitų keitimo prašymai – dažna sukčiavimo (BEC) schema, net jei laiškas atrodo iš žinomo adreso, nes paskyra gali būti pavogta. Patvirtinkite nepriklausomu kanalu prieš keisdami mokėjimo duomenis." },
+  { q: "Kuris teiginys apie viešus USB įkrovimo prievadus (pvz., oro uoste) yra teisingas?",
+    opts: ["Jie visada saugūs, nes tik tiekia elektrą",
+           "Per juos galima perduoti duomenis ar kenkėjišką programinę įrangą, todėl saugiau naudoti savo kroviklį su elektros lizdu",
+           "Saugu naudotis, jei telefonas užrakintas ekrano užraktu", "Rizika kyla tik nešiojamiems kompiuteriams, ne telefonams"],
+    correct: 1,
+    explain: "USB jungtis gali perduoti ne tik elektrą, bet ir duomenis („juice jacking“). Saugiau naudoti savo kroviklį, prijungtą prie elektros lizdo, arba baterijos bloką." },
+  { q: "Norite paprašyti viešo DI įrankio (pvz., ChatGPT) apibendrinti konfidencialią sutartį su klientu. Kas teisinga?",
+    opts: ["Tai visiškai saugu, nes DI įrankiai nieko nesaugo",
+           "Galima įkelti visą sutartį, jei rezultatas naudojamas tik viduje",
+           "Geriau nekelti konfidencialaus turinio į viešą DI įrankį, nebent tai aiškiai leidžia organizacijos politika",
+           "Saugu, jei sutartis PDF formatu"],
+    correct: 2,
+    explain: "Įvesti duomenys į viešus DI įrankius gali būti saugomi trečiosios šalies serveriuose ir panaudoti modelio mokymui – konfidenciali informacija taip gali nutekėti." },
+  { q: "Netyčia išsiuntėte el. laišką su klientų asmens duomenimis ne tam adresatui. Koks teisingiausias veiksmų planas?",
+    opts: ["Nieko nedaryti, nes klaida nedidelė", "Palaukti, kol kas nors pastebės",
+           "Nedelsiant pranešti atsakingam asmeniui (BDAR/saugumo), nes numatyti griežti pranešimo terminai",
+           "Ištrinti laišką iš savo „Išsiųsti“ aplanko ir tikėtis, kad adresatas jo neperskaitys"],
+    correct: 2,
+    explain: "BDAR numato griežtus terminus reaguoti į duomenų saugumo pažeidimus – kuo greičiau pranešama, tuo lengviau sumažinti galimą žalą." },
+  { q: "Kuris iš šių pavyzdžių yra dviejų veiksnių autentifikavimas (2FA), o ne tik geras slaptažodis?",
+    opts: ["Ilgas, 16 simbolių slaptažodis", "Slaptažodis + patvirtinimo kodas, atsiunčiamas į jūsų telefoną",
+           "Tas pats slaptažodis, naudojamas kelioms paskyroms", "Slaptažodžio keitimas kas savaitę"],
+    correct: 1,
+    explain: "2FA reiškia du NEPRIKLAUSOMUS patvirtinimo būdus – vien ilgas ar dažnai keičiamas slaptažodis tebėra tik vienas (\"ką žinau\") faktorius." }
+];
+
+const PASS_THRESHOLD = 0.8;
+let current = 0, score = 0, answers = [];
+
+const startScreen = document.getElementById('startScreen');
+const quizScreen = document.getElementById('quizScreen');
+const resultScreen = document.getElementById('resultScreen');
+const startBtn = document.getElementById('startBtn');
+const nextBtn = document.getElementById('nextBtn');
+const retryBtn = document.getElementById('retryBtn');
+const printBtn = document.getElementById('printBtn');
+
+const ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>';
+const ICON_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 9 6 6M15 9l-6 6"/></svg>';
+
+startBtn.addEventListener('click', () => {
+  startScreen.classList.add('hidden');
+  quizScreen.classList.remove('hidden');
+  current = 0; score = 0; answers = [];
+  renderQuestion();
+});
+
+nextBtn.addEventListener('click', () => {
+  current++;
+  if (current >= QUESTIONS.length) { showResults(); } else { renderQuestion(); }
+});
+
+retryBtn.addEventListener('click', () => {
+  resultScreen.classList.add('hidden');
+  quizScreen.classList.remove('hidden');
+  const st = document.getElementById('saveStatus');
+  if (st) { st.className = 'save-status hidden'; st.innerHTML = ''; }
+  current = 0; score = 0; answers = [];
+  renderQuestion();
+});
+
+printBtn.addEventListener('click', () => window.print());
+
+const certPrintBtn = document.getElementById('certPrintBtn');
+certPrintBtn.addEventListener('click', () => {
+  document.body.classList.add('printing-cert');
+  window.print();
+});
+window.addEventListener('afterprint', () => document.body.classList.remove('printing-cert'));
+
+function genSerial() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+  let out = '';
+  for (let i = 0; i < 10; i++) out += chars[Math.floor(Math.random() * chars.length)];
+  return out;
+}
+
+function renderQuestion() {
+  const item = QUESTIONS[current];
+  document.getElementById('progressLabel').textContent = `KLAUSIMAS ${current + 1}/${QUESTIONS.length}`;
+  document.getElementById('progressFill').style.width = ((current + 1) / QUESTIONS.length * 100) + '%';
+  document.getElementById('questionText').textContent = item.q;
+
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+  item.opts.forEach((text, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.innerHTML = `<span class="letter">${letters[idx]}</span><span>${text}</span>`;
+    btn.addEventListener('click', () => selectAnswer(idx));
+    list.appendChild(btn);
+  });
+
+  const fb = document.getElementById('feedbackBox');
+  fb.className = 'feedback';
+  fb.innerHTML = '';
+  document.getElementById('nextRow').classList.remove('show');
+}
+
+function selectAnswer(idx) {
+  const item = QUESTIONS[current];
+  const isCorrect = idx === item.correct;
+  const buttons = document.querySelectorAll('#optionsList .option');
+  buttons.forEach((b, i) => {
+    b.disabled = true;
+    if (i === item.correct) b.classList.add('correct');
+    if (i === idx && !isCorrect) b.classList.add('incorrect');
+    if (i !== idx && i !== item.correct) b.classList.add('dim');
+  });
+
+  const fb = document.getElementById('feedbackBox');
+  fb.classList.add('show');
+  if (isCorrect) {
+    score++;
+    fb.classList.add('correct-fb');
+    fb.innerHTML = `${ICON_CHECK}<div><b>Teisingai!</b>${item.explain}</div>`;
+  } else {
+    fb.classList.add('incorrect-fb');
+    const correctLetter = ['A','B','C','D'][item.correct];
+    fb.innerHTML = `${ICON_X}<div><b>Neteisingai — teisingas atsakymas: ${correctLetter}) ${item.opts[item.correct]}</b>${item.explain}</div>`;
+  }
+  answers.push({ chosen: idx, correct: item.correct, isCorrect });
+
+  const nextRow = document.getElementById('nextRow');
+  nextRow.classList.add('show');
+  nextBtn.textContent = (current === QUESTIONS.length - 1) ? 'Peržiūrėti rezultatus →' : 'Kitas klausimas →';
+}
+
+function showResults() {
+  quizScreen.classList.add('hidden');
+  resultScreen.classList.remove('hidden');
+
+  const pct = Math.round((score / QUESTIONS.length) * 100);
+  const passed = (score / QUESTIONS.length) >= PASS_THRESHOLD;
+
+  const banner = document.getElementById('resultBanner');
+  banner.className = 'result-banner ' + (passed ? 'pass' : 'fail');
+  document.getElementById('resultIcon').innerHTML = passed ? ICON_CHECK : ICON_X;
+  document.getElementById('resultScore').textContent = `${score} / ${QUESTIONS.length} (${pct}%)`;
+  document.getElementById('resultStatus').textContent = passed ? 'Testas įskaitytas' : 'Testas neįskaitytas — reikia bent 80 %';
+
+  document.getElementById('metaName').textContent = document.getElementById('fName').value || '—';
+  document.getElementById('metaDept').textContent = document.getElementById('fDept').value || '—';
+  document.getElementById('metaDate').textContent = new Date().toLocaleDateString('lt-LT');
+
+  const reviewList = document.getElementById('reviewList');
+  reviewList.innerHTML = '';
+  answers.forEach((a, i) => {
+    const div = document.createElement('div');
+    div.className = 'review-item ' + (a.isCorrect ? 'ok' : 'bad');
+    div.innerHTML = (a.isCorrect ? ICON_CHECK : ICON_X) + `<span>${i + 1}. ${QUESTIONS[i].q}</span>`;
+    reviewList.appendChild(div);
+  });
+
+  // Bandymų kiekis neribotas - "Kartoti testą" liks matomas visada,
+  // nepriklausomai nuo to, ar testas išlaikytas.
+
+  const nameVal = document.getElementById('fName').value.trim();
+  const deptVal = document.getElementById('fDept').value.trim();
+  const dateVal = new Date().toLocaleDateString('lt-LT');
+  const serial = genSerial();
+
+  const certBlock = document.getElementById('certBlock');
+  if (passed) {
+    certBlock.classList.remove('hidden');
+    printBtn.classList.add('hidden');
+    document.getElementById('certName').textContent = nameVal || 'Vardenis Pavardenis';
+    document.getElementById('certScore').textContent = `${score}/${QUESTIONS.length} (${pct}%)`;
+    document.getElementById('certDate').textContent = dateVal;
+    document.getElementById('certSerial').textContent = serial;
+  } else {
+    certBlock.classList.add('hidden');
+    printBtn.classList.remove('hidden');
+  }
+
+  // Jei puslapis paleistas per vietinį serverį (run_server.py), rezultatas
+  // ir sertifikatas automatiškai išsaugomi serverio kompiuteryje.
+  // Atidarius failą tiesiog dvigubu paspaudimu (file://), šis kvietimas
+  // nepavyksta ir naudotojui parodoma, kad rezultatas neužfiksuotas serveryje.
+  const statusEl = document.getElementById('saveStatus');
+  const ICON_CLOUD_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 17.6A4 4 0 0 0 18 10h-1.3A7 7 0 1 0 5 15.7"/><path d="m9 15 2 2 4-4"/></svg>';
+  const ICON_INFO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>';
+
+  function showLocalOnly() {
+    statusEl.className = 'save-status local';
+    statusEl.innerHTML = ICON_INFO + '<span>Rezultatas <b>neužfiksuotas serveryje</b> (puslapis atidarytas be mokymų serverio). Jei reikia oficialaus įrašo, atlikite testą per organizacijos pateiktą nuorodą arba atsispausdinkite sertifikatą patys.</span>';
+    statusEl.classList.remove('hidden');
+  }
+
+  try {
+    fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: nameVal, dept: deptVal, score, total: QUESTIONS.length,
+        pct, passed, date: dateVal, serial
+      })
+    }).then(function (r) {
+      if (r && r.ok) {
+        statusEl.className = 'save-status saved';
+        statusEl.innerHTML = ICON_CLOUD_OK + '<span>Rezultatas užfiksuotas' + (passed ? ', sertifikatas išsaugotas' : '') + ' mokymų serveryje.</span>';
+        statusEl.classList.remove('hidden');
+      } else {
+        showLocalOnly();
+      }
+    }).catch(function () { showLocalOnly(); });
+  } catch (e) { showLocalOnly(); }
+}
+</script>
+</body>
+</html>
